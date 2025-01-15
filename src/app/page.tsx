@@ -1,5 +1,6 @@
 import Gallery from "@/components/gallery/gallery";
 import albums from "../data/albums.json";
+import Facebook from "@/components/social/facebook";
 
 export default function Home() {
   const selectedAlbum = albums[0];
@@ -30,6 +31,7 @@ export default function Home() {
         </div>
       </div>
       <Gallery album={selectedAlbum} buttonText="View Gallery" />
+      <Facebook url="https://www.facebook.com/VancouverElks823" />
     </div>
   );
 }
