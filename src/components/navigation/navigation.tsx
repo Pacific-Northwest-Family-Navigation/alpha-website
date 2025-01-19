@@ -12,9 +12,9 @@ import {
   Dropdown,
   DropdownMenu,
   DropdownSection,
-} from "@nextui-org/react";
+} from "@heroui/react";
 import { Logo } from "./logo";
-import { NavbarMenu, NavbarMenuItem, NavbarMenuToggle } from "@nextui-org/navbar";
+import { NavbarMenu, NavbarMenuItem, NavbarMenuToggle } from "@heroui/navbar";
 import React from "react";
 
 export type NavigationProps = {
@@ -289,18 +289,22 @@ export default function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
   return (
-    <Navbar onMenuOpenChange={setIsMenuOpen} maxWidth="full">
+    <Navbar onMenuOpenChange={setIsMenuOpen} maxWidth="full" height={200}>
       <NavbarContent>
         <NavbarMenuToggle
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-          className="sm:hidden"
+          className="lg:hidden"
         />
         <NavbarBrand>
-          <Logo size={50} />
+          <Logo size={150} />
+          <div className="m-5">
+            <p className="text-2xl font-bold text-inherit">Pacific Northwest</p>
+            <p className="text-2xl font-bold text-inherit">Family Navigation</p>
+          </div>
           {/* <p className="font-bold text-inherit ml-2">Pacific Northwest Family Navigation</p> */}
         </NavbarBrand>
       </NavbarContent>
-      <NavbarContent className="hidden sm:flex gap-4" justify="start">
+      <NavbarContent className="hidden lg:flex gap-4" justify="start">
         <NavbarItem isActive>
           <Link color="foreground" aria-current="page" href="/">
             Home

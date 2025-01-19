@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 // import Image from "next/image";
-import { NextUIProvider } from "@nextui-org/react";
+import {HeroUIProvider} from "@heroui/system";
 import Navigation from "@/components/navigation/navigation";
 
 const geistSans = Geist({
@@ -30,7 +30,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-100`}
       >
-        <NextUIProvider>
+        <HeroUIProvider>
           <div className="w-5/6 bg-slate-200 mx-auto min-h-dvh">
             <header className="row-start-1 flex gap-6 flex-wrap items-center justify-center">
               {/* <div>
@@ -57,12 +57,12 @@ export default function RootLayout({
             <main className="p-10">{children}</main>
             <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
               <p className="text-sm text-center pt-4">
-                Our volunteers are working on building our website. Please be
-                patient.
+                {/* Our volunteers are working on building our website. Please be
+                patient. */}
               </p>
             </footer>
           </div>
-        </NextUIProvider>
+        </HeroUIProvider>
       </body>
     </html>
   );
