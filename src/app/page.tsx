@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export default function Home() {
   return (
     <div className="">
@@ -13,6 +15,7 @@ export default function Home() {
           to help your favorite non-profit! Whoo-hoo! The only catch? You have
           to tell them we sent you! Check out what they have to offer below!
         </p>
+        <Image src="/ridernexa.jpg" alt="Rider & Nexa" width={500} height={500} />
       </p>
     </div>
   );
