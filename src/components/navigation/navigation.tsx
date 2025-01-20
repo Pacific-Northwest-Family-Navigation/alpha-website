@@ -280,7 +280,6 @@ export default function Navigation() {
     server: <Server className="text-success" fill="currentColor" size={30} />,
     user: <TagUser className="text-danger" fill="currentColor" size={30} />,
   };
-  const menuItems = ["Home", "About Us", "My Story", "Events", "Contacts"];
   const menuItems2: MenuItem[] = [
     { title: "Home", key:"home", href: "/" },
     { title: "About Us", key:"about-us", href: "/about" },
