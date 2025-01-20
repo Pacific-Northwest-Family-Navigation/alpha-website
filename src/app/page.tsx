@@ -4,8 +4,8 @@ import NextImage from "next/image";
 export default function Home() {
   return (
     <div>
-      <p class="text-2xl font-bold text-center">Supporting Families, Enriching Lives, Building Communities</p>
-    <p class="text-center text-lg pt-4">Each week we will be spotlighting a different community resource.</p>
+      <p className="text-2xl font-bold text-center">Supporting Families, Enriching Lives, Building Communities</p>
+    <p className="text-center text-lg pt-4">Each week we will be spotlighting a different community resource.</p>
     <div className="flex justify-center items-center p-6">
       <Image
         src="/spotlight/in-the-spotlight.jpg"
