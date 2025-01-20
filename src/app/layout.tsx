@@ -38,7 +38,7 @@ export default function RootLayout({
             <main className="p-10">{children}</main>
             <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
               <p className="text-sm text-center pt-4">
-                Website is provided by Just a Little Bit Creative.
+                Website is designed by Just a Little Bit Creative.
               </p>
             </footer>
           </div>

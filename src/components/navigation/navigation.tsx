@@ -26,10 +26,11 @@ export type NavigationProps = {
 };
 
 export type MenuItem = {
-  title: string,
-  subItems?: MenuItem[]
-  href:string
-}
+  title: string;
+  key: string;
+  subItems?: MenuItem[];
+  href?: string;
+};
 
 export const ChevronDown = ({
   fill,
@@ -279,46 +280,61 @@ export default function Navigation() {
     server: <Server className="text-success" fill="currentColor" size={30} />,
     user: <TagUser className="text-danger" fill="currentColor" size={30} />,
   };
-  const menuItems = [
-    "Home",
-    "About Us",
-    "My Story",
-    "Events",
-    "Contacts",
+  const menuItems = ["Home", "About Us", "My Story", "Events", "Contacts"];
+  const menuItems2: MenuItem[] = [
+    { title: "Home", key:"home", href: "/" },
+    { title: "About Us", key:"about-us", href: "/about" },
+    { title: "My Story", key:"story", href: "/story" },
+    {
+      title: "Events",
+      key:"events",
+      subItems: [
+        {
+          title: "Upcoming",
+          key: "upcoming",
+          subItems: [
+            { title: "Resource Fair 2025", key:"resource-fair-2025", href: "/events/resource-fair-2025" },
+          ],
+        },
+        {
+          title: "Previous",
+          key: "previous",
+          subItems: [
+            {
+              title: "Sensitive Santa 2024",
+              href: "/events/sensitive-santa-2024",
+              key: "sensitive-santa-2024"
+            },
+          ],
+        },
+      ],
+    },
+    { title: "Contact Us", key:"contact", href: "/contact" },
   ];
-  const menuItems2:MenuItem[] = [
-    {title: "Home", href:"/"},
-    {title: "About Us", href:"/about"},
-    {title: "My Story", href:"/story"},
-    {title: "Events", href:"#", subItems:[
-      {title: "Hi", href:""}
-    ]},
-    {title: "Contact Us", href:"/contact"},
-  ]
 
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
-  const buildNavbarMenu = (navbarItems:MenuItem[]) => {
-    return navbarItems.map((item, index) => (
-      <NavbarMenuItem>
-        
-        <Link
-          className="w-full"
-          color={
-            index === 2
-              ? "primary"
-              : index === menuItems.length - 1
-              ? "danger"
-              : "navigation-foreground"
-          }
-          href={item.href}
-          size="lg"
-        >
-          {item.title}
-        </Link>
+  const buildNavbarMenu = (navbarItems: MenuItem[], size:string = "lg") => {
+    return navbarItems.map((item:MenuItem) => {
+      const itemValue = item.href ? (<><Link
+        className="w-full"
+        color="foreground"
+        href={item.href}
+        size={size}
+      >
+        {item.title}
+      </Link></>) : (<>{item.title}</>);
+      const subItems = item.subItems ? buildNavbarMenu(item.subItems, size === "lg" ? "md" : "sm") : (<></>);
+
+      return (<>
+      <NavbarMenuItem key={item.key}>
+        {itemValue}
       </NavbarMenuItem>
-      ))
-  }
+      {subItems}
+      </>
+    )});
+  };
+
   return (
     <Navbar onMenuOpenChange={setIsMenuOpen} maxWidth="full" height={200}>
       <NavbarContent>
@@ -336,79 +352,85 @@ export default function Navigation() {
         </NavbarBrand>
       </NavbarContent>
       <div>
-      <p className="font-bold text-inherit text-4xl">Pacific Northwest Family Navigation</p>
-      <NavbarContent className="hidden lg:flex gap-4" justify="center">
-        <NavbarItem isActive>
-          <Link color="foreground" aria-current="page" href="/">
-            Home
-          </Link>
-        </NavbarItem>
-        <Dropdown>
-          <NavbarItem>
-            <DropdownTrigger>
-              <Button
-                disableRipple
-                className="p-0 bg-transparent data-[hover=true]:bg-transparent"
-                endContent={icons.chevron}
-                radius="sm"
-                variant="light"
-              >
-                Events
-              </Button>
-            </DropdownTrigger>
+        <p className="font-bold text-inherit text-4xl">
+          Pacific Northwest Family Navigation
+        </p>
+        <NavbarContent className="hidden lg:flex gap-4" justify="center">
+          <NavbarItem isActive>
+            <Link color="foreground" aria-current="page" href="/">
+              Home
+            </Link>
           </NavbarItem>
-          <DropdownMenu
-            aria-label="Events"
-            className="w-[340px]"
-            itemClasses={{
-              base: "gap-4",
-            }}
-          >
-            <DropdownSection showDivider title="Upcoming">
-              <DropdownItem
-                key="resource_fair_2025"
-                description="Our upcoming Resource Fair is a chance to meet other families, learn about the community, and find support for your family’s needs."
-                href="/events/resource-fair-2025"
-              >
-                Resource Fair 2025
-              </DropdownItem>
-            </DropdownSection>
-            <DropdownSection showDivider title="Previous">
-              <DropdownItem
-                key="sensitive_santa_2024"
-                description="Our Sensitive Santa Event for 2024"
-                href="/events/sensitive-santa-2024"
-              >
-                Sensitive Santa 2024
-              </DropdownItem>
-            </DropdownSection>
-          </DropdownMenu>
-        </Dropdown>
-        <NavbarItem>
-          <Link color="foreground" href="/about">
-            About Us
-          </Link>
-        </NavbarItem>
-        <NavbarItem>
-          <Link color="foreground" href="/story">
-            My Story
-          </Link>
-        </NavbarItem>
-        <NavbarItem>
-          <Link color="foreground" href="/contact">
-            Contact Us
-          </Link>
-        </NavbarItem>
-      </NavbarContent>
+          <NavbarItem>
+            <Link color="foreground" href="/about">
+              About Us
+            </Link>
+          </NavbarItem>
+          <NavbarItem>
+            <Link color="foreground" href="/story">
+              My Story
+            </Link>
+          </NavbarItem>
+          <Dropdown>
+            <NavbarItem>
+              <DropdownTrigger>
+                <Button
+                  disableRipple
+                  className="p-0 bg-transparent data-[hover=true]:bg-transparent"
+                  endContent={icons.chevron}
+                  radius="sm"
+                  variant="light"
+                >
+                  Events
+                </Button>
+              </DropdownTrigger>
+            </NavbarItem>
+            <DropdownMenu
+              aria-label="Events"
+              className="w-[340px]"
+              itemClasses={{
+                base: "gap-4",
+              }}
+            >
+              <DropdownSection showDivider title="Upcoming">
+                <DropdownItem
+                  key="resource_fair_2025"
+                  description="Our upcoming Resource Fair is a chance to meet other families, learn about the community, and find support for your family’s needs."
+                  href="/events/resource-fair-2025"
+                >
+                  Resource Fair 2025
+                </DropdownItem>
+              </DropdownSection>
+              <DropdownSection showDivider title="Previous">
+                <DropdownItem
+                  key="sensitive_santa_2024"
+                  description="Our Sensitive Santa Event for 2024"
+                  href="/events/sensitive-santa-2024"
+                >
+                  Sensitive Santa 2024
+                </DropdownItem>
+              </DropdownSection>
+            </DropdownMenu>
+          </Dropdown>
+          <NavbarItem>
+            <Link color="foreground" href="/contact">
+              Contact Us
+            </Link>
+          </NavbarItem>
+        </NavbarContent>
       </div>
-      
+
       <NavbarMenu>
-        {menuItems.map((item, index) => (
+        {/* {menuItems.map((item, index) => (
           <NavbarMenuItem key={`${item}-${index}`}>
             <Link
               className="w-full"
               color={
-                index === 2 ? "primary" : index === menuItems.length - 1 ? "danger" : "navigation-foreground"
+                index === 2
+                  ? "primary"
+                  : index === menuItems.length - 1
+                  ? "danger"
+                  : "navigation-foreground"
               }
               href="#"
               size="lg"
@@ -416,8 +438,9 @@ export default function Navigation() {
               {item}
             </Link>
           </NavbarMenuItem>
-        ))}
-      </NavbarMenu> 
+        ))} */}
+        {buildNavbarMenu(menuItems2)}
+      </NavbarMenu>
     </Navbar>
   );
 }
