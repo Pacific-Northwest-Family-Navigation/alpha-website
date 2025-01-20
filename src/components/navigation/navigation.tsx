@@ -374,7 +374,7 @@ export default function Navigation() {
             <Link
               className="w-full"
               color={
-                index === 2 ? "primary" : index === menuItems.length - 1 ? "danger" : "foreground"
+                index === 2 ? "primary" : index === menuItems.length - 1 ? "danger" : "navigation-foreground"
               }
               href="#"
               size="lg"

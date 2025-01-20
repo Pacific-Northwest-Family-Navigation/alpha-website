@@ -28,37 +28,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-100`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <HeroUIProvider>
-          <div className="w-5/6 bg-slate-200 mx-auto min-h-dvh">
-            <header className="row-start-1 flex gap-6 flex-wrap items-center justify-center">
-              {/* <div>
-                <Image
-                  src="/logo.png"
-                  alt="Pacific Northwest Family Navigation Logo"
-                  width={150}
-                  height={150}
-                />
-              </div> */}
-              {/* <div>
-                <p className="full"><Navigation></Navigation></p>
-              </div> */}
-              {/* <div>
-                <p className="mt-8 text-4xl font-bold text-center">
-                  Pacific Northwest Family Navigation
-                </p>
-                <p className="mt-4 text-xl text-center">
-                  Supporting Families, Enriching Lives, Building Communities
-                </p>
-              </div> */}
+          <div className="w-5/6 bg-[--background] mx-auto min-h-dvh">
+            <header className="row-start-1 flex gap-6 flex-wrap items-center justify-center bg-[--navigation-background] text-[--navigation-foreground]">
               <Navigation></Navigation>
             </header>
             <main className="p-10">{children}</main>
             <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
               <p className="text-sm text-center pt-4">
-                {/* Our volunteers are working on building our website. Please be
-                patient. */}
+                Website is provided by Just a Little Bit Creative.
               </p>
             </footer>
           </div>

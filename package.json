@@ -3,7 +3,8 @@
   "scripts": {
     "buildAlbums": "npx tsx src/scripts/buildAlbums.ts",
     "build": "next build",
-    "dev": "NODE_OPTIONS='--inspect' next dev",
+    "dev": "next dev",
+    "dev-inspect": "NODE_OPTIONS='--inspect' next dev",
     "start": "next start",
     "lint": "next lint"
   },
