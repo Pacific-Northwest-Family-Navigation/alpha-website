@@ -66,8 +66,8 @@ export default function Story() {
           src="/mystory.jpg"
           alt="My Story"
           as={NextImage}
-          width={1024}
-          height={768}
+          width={1024/2}
+          height={768/2}
         />
       </div>
     </div>

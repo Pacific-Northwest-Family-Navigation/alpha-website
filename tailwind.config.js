@@ -18,6 +18,9 @@ module.exports = {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      fontFamily: {
+        'cursive': ["'Brush Script MT'", "cursive"]
+      }
     },
   },
   darkMode: "class",

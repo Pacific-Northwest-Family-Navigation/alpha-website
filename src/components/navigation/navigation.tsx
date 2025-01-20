@@ -25,6 +25,12 @@ export type NavigationProps = {
   className?: string;
 };
 
+export type MenuItem = {
+  title: string,
+  subItems?: MenuItem[]
+  href:string
+}
+
 export const ChevronDown = ({
   fill,
   size,
@@ -274,20 +280,45 @@ export default function Navigation() {
     user: <TagUser className="text-danger" fill="currentColor" size={30} />,
   };
   const menuItems = [
-    "Profile",
-    "Dashboard",
-    "Activity",
-    "Analytics",
-    "System",
-    "Deployments",
-    "My Settings",
-    "Team Settings",
-    "Help & Feedback",
-    "Log Out",
+    "Home",
+    "About Us",
+    "My Story",
+    "Events",
+    "Contacts",
   ];
+  const menuItems2:MenuItem[] = [
+    {title: "Home", href:"/"},
+    {title: "About Us", href:"/about"},
+    {title: "My Story", href:"/story"},
+    {title: "Events", href:"#", subItems:[
+      {title: "Hi", href:""}
+    ]},
+    {title: "Contact Us", href:"/contact"},
+  ]
 
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
+  const buildNavbarMenu = (navbarItems:MenuItem[]) => {
+    return navbarItems.map((item, index) => (
+      <NavbarMenuItem>
+        
+        <Link
+          className="w-full"
+          color={
+            index === 2
+              ? "primary"
+              : index === menuItems.length - 1
+              ? "danger"
+              : "navigation-foreground"
+          }
+          href={item.href}
+          size="lg"
+        >
+          {item.title}
+        </Link>
+      </NavbarMenuItem>
+      ))
+  }
   return (
     <Navbar onMenuOpenChange={setIsMenuOpen} maxWidth="full" height={200}>
       <NavbarContent>
@@ -297,14 +328,16 @@ export default function Navigation() {
         />
         <NavbarBrand>
           <Logo size={150} />
-          <div className="m-5">
+          {/* <div className="m-5">
             <p className="text-2xl font-bold text-inherit">Pacific Northwest</p>
             <p className="text-2xl font-bold text-inherit">Family Navigation</p>
-          </div>
+          </div> */}
           {/* <p className="font-bold text-inherit ml-2">Pacific Northwest Family Navigation</p> */}
         </NavbarBrand>
       </NavbarContent>
-      <NavbarContent className="hidden lg:flex gap-4" justify="start">
+      <div>
+      <p className="font-bold text-inherit text-4xl">Pacific Northwest Family Navigation</p>
+      <NavbarContent className="hidden lg:flex gap-4" justify="center">
         <NavbarItem isActive>
           <Link color="foreground" aria-current="page" href="/">
             Home
@@ -367,6 +400,7 @@ export default function Navigation() {
           </Link>
         </NavbarItem>
       </NavbarContent>
+      </div>
       
       <NavbarMenu>
         {menuItems.map((item, index) => (

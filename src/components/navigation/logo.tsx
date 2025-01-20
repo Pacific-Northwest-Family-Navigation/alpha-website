@@ -1,7 +1,7 @@
 import Image from "next/image";
 
 export const Logo = ({
-  size = 150,
+  size = 200,
 }: {
   size?: number;
 }) => {
