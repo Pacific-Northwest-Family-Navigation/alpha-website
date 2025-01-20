@@ -313,7 +313,7 @@ export default function Navigation() {
 
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
-  const buildNavbarMenu = (navbarItems: MenuItem[], size:string = "lg"):React.JSX.Element[]=> {
+  const buildNavbarMenu = (navbarItems: MenuItem[], size:"lg" | "md" | "sm" | undefined = "lg"):React.JSX.Element[]=> {
     return navbarItems.map((item:MenuItem) => {
       const itemValue = item.href ? (<><Link
         className="w-full"
