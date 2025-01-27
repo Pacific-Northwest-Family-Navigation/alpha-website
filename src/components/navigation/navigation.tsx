@@ -281,18 +281,22 @@ export default function Navigation() {
     user: <TagUser className="text-danger" fill="currentColor" size={30} />,
   };
   const menuItems2: MenuItem[] = [
-    { title: "Home", key:"home", href: "/" },
-    { title: "About Us", key:"about-us", href: "/about" },
-    { title: "My Story", key:"story", href: "/story" },
+    { title: "Home", key: "home", href: "/" },
+    { title: "About Us", key: "about-us", href: "/about" },
+    { title: "My Story", key: "story", href: "/story" },
     {
       title: "Events",
-      key:"events",
+      key: "events",
       subItems: [
         {
           title: "Upcoming",
           key: "upcoming",
           subItems: [
-            { title: "Resource Fair 2025", key:"resource-fair-2025", href: "/events/resource-fair-2025" },
+            {
+              title: "Resource Fair 2025",
+              key: "resource-fair-2025",
+              href: "/events/resource-fair-2025",
+            },
           ],
         },
         {
@@ -302,36 +306,61 @@ export default function Navigation() {
             {
               title: "Sensitive Santa 2024",
               href: "/events/sensitive-santa-2024",
-              key: "sensitive-santa-2024"
+              key: "sensitive-santa-2024",
             },
           ],
         },
       ],
     },
-    { title: "Contact Us", key:"contact", href: "/contact" },
+    { title: "Spotlights", key: "spotlights", subItems: [
+      {
+        title: "Inclusive Support Services NW",
+        key: "2025-2be-inclusive",
+        href: "/spotlights/2025-2be-inclusive",
+      },
+      {
+        title: "Columbia Pacific Therapy",
+        key: "2025-columbia-pacific-therapy",
+        href: "/spotlights/2025-columbia-pacific-therapy",
+      },
+    ]},
+    { title: "Contact Us", key: "contact", href: "/contact" },
   ];
 
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
-  const buildNavbarMenu = (navbarItems: MenuItem[], size:"lg" | "md" | "sm" | undefined = "lg"):React.JSX.Element[]=> {
-    return navbarItems.map((item:MenuItem) => {
-      const itemValue = item.href ? (<><Link
-        className="w-full"
-        color="foreground"
-        href={item.href}
-        size={size}
-      >
-        {item.title}
-      </Link></>) : (<>{item.title}</>);
-      const subItems = item.subItems ? buildNavbarMenu(item.subItems, size === "lg" ? "md" : "sm") : (<></>);
+  const buildNavbarMenu = (
+    navbarItems: MenuItem[],
+    size: "lg" | "md" | "sm" | undefined = "lg"
+  ): React.JSX.Element[] => {
+    return navbarItems.map((item: MenuItem) => {
+      const itemValue = item.href ? (
+        <>
+          <Link
+            className="w-full"
+            color="foreground"
+            href={item.href}
+            size={size}
+          >
+            {item.title}
+          </Link>
+        </>
+      ) : (
+        <>{item.title}</>
+      );
+      const subItems = item.subItems ? (
+        buildNavbarMenu(item.subItems, size === "lg" ? "md" : "sm")
+      ) : (
+        <></>
+      );
 
-      return (<>
-      <NavbarMenuItem key={item.key}>
-        {itemValue}
-      </NavbarMenuItem>
-      {subItems}
-      </>
-    )});
+      return (
+        <>
+          <NavbarMenuItem key={item.key}>{itemValue}</NavbarMenuItem>
+          {subItems}
+        </>
+      );
+    });
   };
 
   return (
@@ -409,6 +438,41 @@ export default function Navigation() {
                   Sensitive Santa 2024
                 </DropdownItem>
               </DropdownSection>
+            </DropdownMenu>
+          </Dropdown>
+          <Dropdown>
+            <NavbarItem>
+              <DropdownTrigger>
+                <Button
+                  disableRipple
+                  className="p-0 bg-transparent data-[hover=true]:bg-transparent"
+                  endContent={icons.chevron}
+                  radius="sm"
+                  variant="light"
+                >
+                  Spotlights
+                </Button>
+              </DropdownTrigger>
+            </NavbarItem>
+            <DropdownMenu
+              aria-label="Events"
+              className="w-[340px]"
+              itemClasses={{
+                base: "gap-4",
+              }}
+            >
+                <DropdownItem
+                  key="2025-2be-inclusive"
+                  href="/spotlights/2025-2be-inclusive"
+                >
+                  Inclusive Support Services NW
+                </DropdownItem>
+                <DropdownItem
+                  key="2025-columbia-pacific-therapy"
+                  href="/spotlights/2025-columbia-pacific-therapy"
+                >
+                  Columbia Pacific Therapy
+                </DropdownItem>
             </DropdownMenu>
           </Dropdown>
           <NavbarItem>
