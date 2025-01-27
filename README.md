@@ -37,3 +37,5 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 
 ## HeroUI
 https://www.heroui.com/docs/guide/installation
+
+https://nextjs.org/docs/app/building-your-application/configuring/mdx
