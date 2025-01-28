@@ -5,6 +5,17 @@ const nextConfig = {
   // Configure `pageExtensions` to include markdown and MDX files
   pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
   // Optionally, add any other Next.js config below
+  // Static export
+  // https://nextjs.org/docs/app/building-your-application/deploying/static-exports#version-history
+  output: 'export',
+
+  // Configure a base path
+  // https://nextjs.org/docs/app/api-reference/next-config-js/basePath
+  basePath: path,
+
+  // Disable server side image optimization too
+  // https://nextjs.org/docs/api-reference/next/image#unoptimized
+  'images.unoptimized': true
 }
  
 const withMDX = createMDX({
