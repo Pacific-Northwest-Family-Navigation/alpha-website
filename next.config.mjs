@@ -7,7 +7,7 @@ const nextConfig = {
   // Optionally, add any other Next.js config below
   // Static export
   // https://nextjs.org/docs/app/building-your-application/deploying/static-exports#version-history
-  output: 'export',
+  // output: 'export',
 
   // Configure a base path
   // https://nextjs.org/docs/app/api-reference/next-config-js/basePath
