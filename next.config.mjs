@@ -15,7 +15,9 @@ const nextConfig = {
 
   // Disable server side image optimization too
   // https://nextjs.org/docs/api-reference/next/image#unoptimized
-  'images.unoptimized': true,
+  // 'images.unoptimized': true,
+
+  images: { unoptimized: true },
 
   // Support Next.js config wrappers, such as next-pwa
   // https://github.com/actions/configure-pages/issues/44#issuecomment-1705407518
