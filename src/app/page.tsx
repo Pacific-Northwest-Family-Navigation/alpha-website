@@ -1,8 +1,8 @@
 import Spotlight from "@/components/spotlights/spotlight";
-import { getSpotlightInfo } from "@/utils/spotlights-util";
+import { getCurrentSpotlight } from "@/utils/spotlights-util";
 
 export default function Home() {
-  const currentSpotlight = getSpotlightInfo("2025-columbia-pacific-therapy");
+  const currentSpotlight = getCurrentSpotlight();
   if (!currentSpotlight) {
     return (<></>)
   }
