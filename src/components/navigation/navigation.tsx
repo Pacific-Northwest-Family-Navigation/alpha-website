@@ -16,6 +16,7 @@ import {
 import { Logo } from "./logo";
 import { NavbarMenu, NavbarMenuItem, NavbarMenuToggle } from "@heroui/navbar";
 import React from "react";
+import { getAllSpotlightInfo } from "@/utils/spotlights-util";
 
 export type NavigationProps = {
   fill?: string;
@@ -30,6 +31,8 @@ export type MenuItem = {
   key: string;
   subItems?: MenuItem[];
   href?: string;
+  icon?: React.JSX.Element;
+  description?: string;
 };
 
 export const ChevronDown = ({
@@ -280,6 +283,23 @@ export default function Navigation() {
     server: <Server className="text-success" fill="currentColor" size={30} />,
     user: <TagUser className="text-danger" fill="currentColor" size={30} />,
   };
+
+  const getSpotlightMenu = () => {
+    const menuItems: MenuItem[] = [];
+
+    getAllSpotlightInfo().forEach((spotlight) => {
+      if (spotlight.visible) {
+        menuItems.push({
+          title: spotlight.name,
+          key: spotlight.id,
+          href: `/spotlights/${spotlight.id}`,
+        });
+      }
+    });
+
+    return menuItems;
+  };
+
   const menuItems2: MenuItem[] = [
     { title: "Home", key: "home", href: "/" },
     { title: "About Us", key: "about-us", href: "/about" },
@@ -311,19 +331,14 @@ export default function Navigation() {
           ],
         },
       ],
+      icon: icons.chevron,
     },
-    { title: "Spotlights", key: "spotlights", subItems: [
-      {
-        title: "Inclusive Support Services NW",
-        key: "2025-2be-inclusive",
-        href: "/spotlights/2025-2be-inclusive",
-      },
-      {
-        title: "Columbia Pacific Therapy",
-        key: "2025-columbia-pacific-therapy",
-        href: "/spotlights/2025-columbia-pacific-therapy",
-      },
-    ]},
+    {
+      title: "Spotlights",
+      key: "spotlights",
+      subItems: getSpotlightMenu(),
+      icon: icons.chevron,
+    },
     { title: "Contact Us", key: "contact", href: "/contact" },
   ];
 
@@ -363,6 +378,115 @@ export default function Navigation() {
     });
   };
 
+  const buildNavbarDropdownItem = (navbarItem: MenuItem): React.JSX.Element => {
+    return (
+      <>
+        <DropdownItem
+          key={navbarItem.key + "-item"}
+          description={navbarItem.description}
+          href={navbarItem.href}
+        >
+          {navbarItem.title}
+        </DropdownItem>
+      </>
+    );
+  };
+
+  const buildNavbarDropdownSection = (
+    navbarItem: MenuItem
+  ): React.JSX.Element => {
+    const subItems: React.JSX.Element[] = [];
+    navbarItem.subItems?.forEach((item: MenuItem) => {
+      subItems.push(buildNavbarDropdownItem(item));
+    });
+    return (
+      <>
+        <DropdownSection
+          key={navbarItem.key + "-section"}
+          showDivider
+          title={navbarItem.title}
+        >
+          {subItems}
+        </DropdownSection>
+      </>
+    );
+  };
+
+  const buildNavbarDropdown = (navbarItem: MenuItem): React.JSX.Element => {
+    const subItems: React.JSX.Element[] = [];
+    subItems.push();
+
+    if (navbarItem.subItems) {
+      navbarItem.subItems.forEach((item: MenuItem) => {
+        if (item.subItems) {
+          subItems.push(buildNavbarDropdownSection(item));
+        } else {
+          subItems.push(buildNavbarDropdownItem(item));
+        }
+      });
+    }
+    console.log(subItems.length);
+
+    return (
+      <>
+        <Dropdown>
+          <NavbarItem key={navbarItem.key + "-item"}>
+            <DropdownTrigger>
+              <Button
+                disableRipple
+                className="p-0 bg-transparent data-[hover=true]:bg-transparent"
+                endContent={navbarItem.icon}
+                radius="sm"
+                variant="light"
+              >
+                {navbarItem.title}
+              </Button>
+            </DropdownTrigger>
+          </NavbarItem>
+          <DropdownMenu
+            aria-label="Events"
+            className="w-[340px]"
+            itemClasses={{
+              base: "gap-4",
+            }}
+          >
+            {subItems}
+          </DropdownMenu>
+        </Dropdown>
+      </>
+    );
+  };
+
+  const buildNavbarContent = (navbarItems: MenuItem[]): React.JSX.Element => {
+    const subItems: React.JSX.Element[] = [];
+    navbarItems.forEach((item: MenuItem) => {
+      if (item.subItems) {
+        const navDropDown = buildNavbarDropdown(item);
+        console.log(
+          `built ${navDropDown} with ${item.title} - ${item.subItems.length}`
+        );
+        subItems.push(<>{navDropDown}</>);
+      } else {
+        subItems.push(
+          <>
+            <NavbarItem>
+              <Link color="foreground" href={item.href}>
+                {item.title}
+              </Link>
+            </NavbarItem>
+          </>
+        );
+      }
+    });
+    return (
+      <>
+        <NavbarContent className="hidden lg:flex gap-4" justify="center">
+          {subItems}
+        </NavbarContent>
+      </>
+    );
+  };
+
   return (
     <Navbar onMenuOpenChange={setIsMenuOpen} maxWidth="full" height={200}>
       <NavbarContent>
@@ -383,125 +507,10 @@ export default function Navigation() {
         <p className="font-bold text-inherit text-4xl">
           Pacific Northwest Family Navigation
         </p>
-        <NavbarContent className="hidden lg:flex gap-4" justify="center">
-          <NavbarItem isActive>
-            <Link color="foreground" aria-current="page" href="/">
-              Home
-            </Link>
-          </NavbarItem>
-          <NavbarItem>
-            <Link color="foreground" href="/about">
-              About Us
-            </Link>
-          </NavbarItem>
-          <NavbarItem>
-            <Link color="foreground" href="/story">
-              My Story
-            </Link>
-          </NavbarItem>
-          <Dropdown>
-            <NavbarItem>
-              <DropdownTrigger>
-                <Button
-                  disableRipple
-                  className="p-0 bg-transparent data-[hover=true]:bg-transparent"
-                  endContent={icons.chevron}
-                  radius="sm"
-                  variant="light"
-                >
-                  Events
-                </Button>
-              </DropdownTrigger>
-            </NavbarItem>
-            <DropdownMenu
-              aria-label="Events"
-              className="w-[340px]"
-              itemClasses={{
-                base: "gap-4",
-              }}
-            >
-              <DropdownSection showDivider title="Upcoming">
-                <DropdownItem
-                  key="resource_fair_2025"
-                  description="Our upcoming Resource Fair is a chance to meet other families, learn about the community, and find support for your family’s needs."
-                  href="/events/resource-fair-2025"
-                >
-                  Resource Fair 2025
-                </DropdownItem>
-              </DropdownSection>
-              <DropdownSection showDivider title="Previous">
-                <DropdownItem
-                  key="sensitive_santa_2024"
-                  description="Our Sensitive Santa Event for 2024"
-                  href="/events/sensitive-santa-2024"
-                >
-                  Sensitive Santa 2024
-                </DropdownItem>
-              </DropdownSection>
-            </DropdownMenu>
-          </Dropdown>
-          <Dropdown>
-            <NavbarItem>
-              <DropdownTrigger>
-                <Button
-                  disableRipple
-                  className="p-0 bg-transparent data-[hover=true]:bg-transparent"
-                  endContent={icons.chevron}
-                  radius="sm"
-                  variant="light"
-                >
-                  Spotlights
-                </Button>
-              </DropdownTrigger>
-            </NavbarItem>
-            <DropdownMenu
-              aria-label="Events"
-              className="w-[340px]"
-              itemClasses={{
-                base: "gap-4",
-              }}
-            >
-                <DropdownItem
-                  key="2025-2be-inclusive"
-                  href="/spotlights/2025-2be-inclusive"
-                >
-                  Inclusive Support Services NW
-                </DropdownItem>
-                <DropdownItem
-                  key="2025-columbia-pacific-therapy"
-                  href="/spotlights/2025-columbia-pacific-therapy"
-                >
-                  Columbia Pacific Therapy
-                </DropdownItem>
-            </DropdownMenu>
-          </Dropdown>
-          <NavbarItem>
-            <Link color="foreground" href="/contact">
-              Contact Us
-            </Link>
-          </NavbarItem>
-        </NavbarContent>
+        {buildNavbarContent(menuItems2)}
       </div>
 
       <NavbarMenu>
-        {/* {menuItems.map((item, index) => (
-          <NavbarMenuItem key={`${item}-${index}`}>
-            <Link
-              className="w-full"
-              color={
-                index === 2
-                  ? "primary"
-                  : index === menuItems.length - 1
-                  ? "danger"
-                  : "navigation-foreground"
-              }
-              href="#"
-              size="lg"
-            >
-              {item}
-            </Link>
-          </NavbarMenuItem>
-        ))} */}
         {buildNavbarMenu(menuItems2)}
       </NavbarMenu>
     </Navbar>
