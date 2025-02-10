@@ -17,7 +17,6 @@ import { Logo } from "./logo";
 import { NavbarMenu, NavbarMenuItem, NavbarMenuToggle } from "@heroui/navbar";
 import React from "react";
 import { getAllSpotlightInfo } from "@/utils/spotlights-util";
-import { nav } from "framer-motion/client";
 
 export type NavigationProps = {
   fill?: string;
