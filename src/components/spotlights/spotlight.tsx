@@ -10,7 +10,7 @@ export default async function Spotlight({spotlight}: {spotlight:BasicSpotlightIn
         Supporting Families, Enriching Lives, Building Communities
       </h1>
       <p className="text-center text-lg pt-2">
-        Each week we will be spotlighting a different community resource.
+        Each month we will be spotlighting a different community resource.
       </p>
       <div className="flex justify-center items-center p-6">
         <Image

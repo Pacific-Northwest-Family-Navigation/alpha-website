@@ -17,6 +17,7 @@ import { Logo } from "./logo";
 import { NavbarMenu, NavbarMenuItem, NavbarMenuToggle } from "@heroui/navbar";
 import React from "react";
 import { getAllSpotlightInfo } from "@/utils/spotlights-util";
+import { nav } from "framer-motion/client";
 
 export type NavigationProps = {
   fill?: string;
@@ -378,11 +379,12 @@ export default function Navigation() {
     });
   };
 
-  const buildNavbarDropdownItem = (navbarItem: MenuItem): React.JSX.Element => {
+  const buildNavbarDropdownItem = (navbarItem: MenuItem, keyPrefix:string): React.JSX.Element => {
+    console.log(`Building now: ${navbarItem.title} ${keyPrefix + "-" + navbarItem.key + "-item"}`);
     return (
       <>
         <DropdownItem
-          key={navbarItem.key + "-item"}
+          key={keyPrefix + "-" + navbarItem.key + "-item"}
           description={navbarItem.description}
           href={navbarItem.href}
         >
@@ -393,16 +395,17 @@ export default function Navigation() {
   };
 
   const buildNavbarDropdownSection = (
-    navbarItem: MenuItem
+    navbarItem: MenuItem, keyPrefix:string
   ): React.JSX.Element => {
     const subItems: React.JSX.Element[] = [];
+    console.log(`Building ${navbarItem.title} ${keyPrefix + "-" + navbarItem.key + "-section"}`);
     navbarItem.subItems?.forEach((item: MenuItem) => {
-      subItems.push(buildNavbarDropdownItem(item));
+      subItems.push(buildNavbarDropdownItem(item, navbarItem.key));
     });
     return (
       <>
         <DropdownSection
-          key={navbarItem.key + "-section"}
+          key={keyPrefix + "-" + navbarItem.key + "-section"}
           showDivider
           title={navbarItem.title}
         >
@@ -419,17 +422,16 @@ export default function Navigation() {
     if (navbarItem.subItems) {
       navbarItem.subItems.forEach((item: MenuItem) => {
         if (item.subItems) {
-          subItems.push(buildNavbarDropdownSection(item));
+          subItems.push(buildNavbarDropdownSection(item, navbarItem.key));
         } else {
-          subItems.push(buildNavbarDropdownItem(item));
+          subItems.push(buildNavbarDropdownItem(item, navbarItem.key));
         }
       });
     }
-    console.log(subItems.length);
 
     return (
       <>
-        <Dropdown>
+        <Dropdown key={navbarItem.key + "-dropdown"}>
           <NavbarItem key={navbarItem.key + "-item"}>
             <DropdownTrigger>
               <Button
@@ -462,9 +464,6 @@ export default function Navigation() {
     navbarItems.forEach((item: MenuItem) => {
       if (item.subItems) {
         const navDropDown = buildNavbarDropdown(item);
-        console.log(
-          `built ${navDropDown} with ${item.title} - ${item.subItems.length}`
-        );
         subItems.push(<>{navDropDown}</>);
       } else {
         subItems.push(
