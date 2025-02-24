@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-// import Image from "next/image";
-import {HeroUIProvider} from "@heroui/system";
+import { HeroUIProvider } from "@heroui/system";
 import Navigation from "@/components/navigation/navigation";
+import Donate from "@/components/navigation/donate";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,10 +36,11 @@ export default function RootLayout({
               <Navigation></Navigation>
             </header>
             <main className="p-10">{children}</main>
-            <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-              <p className="text-sm text-center pt-4">
+            <footer className="row-start-3 display:block gap-6 items-center justify-center pt-2 bg-[--navigation-background] text-[--navigation-foreground]">
+              <Donate></Donate>
+              <div className="text-sm text-center pt-2">
                 Website is designed by Just a Little Bit Creative.
-              </p>
+              </div>
             </footer>
           </div>
         </HeroUIProvider>
