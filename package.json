@@ -6,9 +6,7 @@
     "dev": "next dev",
     "dev-inspect": "NODE_OPTIONS='--inspect' next dev",
     "start": "next start",
-    "lint": "next lint",
-    "first-config-edit": "bun run ./lib/first.config.ts",
-    "last-config-edit": "bun run ./lib/last.config.ts"
+    "lint": "next lint"
   },
   "dependencies": {
     "@heroui/navbar": "^2.2.9",
@@ -20,7 +18,7 @@
     "@next/mdx": "^15.1.6",
     "@types/mdx": "^2.0.13",
     "framer-motion": "^11.18.1",
-    "magicast": "^0.3.5",
+    "json-stringify-safe": "^5.0.1",
     "next": "^15.1.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

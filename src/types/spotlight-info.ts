@@ -7,5 +7,11 @@ export type BasicSpotlightInfo = BaseSpotlightInfo & {
     year: number,
     order:number,
     startDate: Date,
-    endDate: Date
+    endDate: Date,
+    visible: boolean
+}
+
+export type SpotlightInfo = {
+    spotlights: BasicSpotlightInfo[]
+    currentSpotlightId: string
 }

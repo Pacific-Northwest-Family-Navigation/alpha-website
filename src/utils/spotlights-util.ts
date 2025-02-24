@@ -1,8 +1,9 @@
-import { BasicSpotlightInfo } from "@/types/spotlight-info";
-import spotlights from "@/data/spotlights.json";
+import { BasicSpotlightInfo, SpotlightInfo } from "@/types/spotlight-info";
+import spotlightJson from "@/data/spotlight-info.json";
 
-export function getAllSpotlightInfo() {
-  const spotlightsInfo: BasicSpotlightInfo[] = spotlights.map(
+const spotlightInfo: SpotlightInfo = {
+  currentSpotlightId: spotlightJson.currentSpotlightId,
+  spotlights: spotlightJson.spotlights.map(
     (jsonSpotlight) => {
       const convertedSpotlight: BasicSpotlightInfo = {
         id: jsonSpotlight.id,
@@ -11,11 +12,20 @@ export function getAllSpotlightInfo() {
         order: jsonSpotlight.order,
         startDate: new Date(jsonSpotlight.startDate),
         endDate: new Date(jsonSpotlight.endDate),
+        visible: jsonSpotlight.visible,
       };
       return convertedSpotlight;
     }
-  );
-  return spotlightsInfo;
+  ),
+};
+
+export function getCurrentSpotlight() {
+  const currentSpotlight = getSpotlightInfo(spotlightInfo.currentSpotlightId);
+  return currentSpotlight;
+}
+
+export function getAllSpotlightInfo() {
+  return spotlightInfo.spotlights;
 }
 
 export function getSpotlightInfo(id: string) {

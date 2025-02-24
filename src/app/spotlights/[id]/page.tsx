@@ -10,7 +10,7 @@ export default async function Page({
   const id: string = (await params).id;
   const spotlight: BasicSpotlightInfo|undefined = getSpotlightInfo(id);
   if (!spotlight) {
-    return <></>
+    return <>Spotlight not found</>
   }
   return <Spotlight spotlight={spotlight} />;
 }
