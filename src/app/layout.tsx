@@ -39,7 +39,7 @@ export default function RootLayout({
             <footer className="row-start-3 display:block gap-6 items-center justify-center pt-2 bg-[--navigation-background] text-[--navigation-foreground]">
               <Donate></Donate>
               <div className="text-sm text-center pt-2">
-                Website is designed by Just a Little Bit Creative.
+                
               </div>
             </footer>
           </div>
